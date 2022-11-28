@@ -1,5 +1,5 @@
-from args import request as requestCommand
-from commands import make_request
+from src.args import request as requestCommand
+from src.commands import make_request
 
 import argparse
 
@@ -18,7 +18,7 @@ def main():
 
 
     if args_parse.request:
-        make_request.main(args_parse)
+        print(make_request.main(args_parse))
 
 
 if __name__ == '__main__':
