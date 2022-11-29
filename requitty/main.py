@@ -1,11 +1,12 @@
-from src.args import request, url
-from src.cli.commands.request_commands import make_request
+from src.args import request, url, save 
+from src.cli.commands.request_commands import get_request
 
 import argparse
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(prog='requitty')
+
 
     ###############################################
     ####          REQUEST ARGUMENT           ######
@@ -18,11 +19,12 @@ def main():
 
     parser.add_argument("-v", help="Make a verbose script", type=bool, default=False, metavar="--verbose", dest="verbose")
 
+    parser.add_argument(save['shortCommand'], metavar=save['longCommand'], help=save['help'], type=bool, default=False, dest='save')
+
     args_parse = parser.parse_args()
 
-
     if args_parse.request:
-        make_request.main(args_parse)
+        get_request.main(args_parse)
 
 if __name__ == '__main__':
     main()

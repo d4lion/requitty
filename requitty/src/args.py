@@ -7,5 +7,11 @@ request = {
 url = {
     "shortCommand": "-u",
     "longCommand": "--url",
-    "help": "The url to make a request",
+    "help": "The url to make a request"
+}
+
+save = {
+    "shortCommand": "-s",
+    "longCommand": "--save",
+    "help": "Save the response of the url"
 }
