@@ -1,5 +1,5 @@
-from src.args import request as requestCommand
-from src.commands import make_request
+from src.args import request, url
+from src.cli.commands.request_commands import make_request
 
 import argparse
 
@@ -7,10 +7,14 @@ import argparse
 def main():
     parser = argparse.ArgumentParser()
 
-    # Arguments
-    parser.add_argument(
-        requestCommand["shortCommand"], requestCommand["longCommand"], help=requestCommand["help"], nargs=2,
-        dest="request")
+    ###############################################
+    ####          REQUEST ARGUMENT           ######
+    ###############################################
+
+    parser.add_argument(request['shortCommand'], metavar=request['longCommand'], help=request['help'], dest="request", type=str)
+
+    parser.add_argument(url['shortCommand'], metavar=url['longCommand'], help=url['help'], type=str, dest="url")
+    
 
     parser.add_argument("-v", help="Make a verbose script", type=bool, default=False, metavar="--verbose", dest="verbose")
 
@@ -18,8 +22,7 @@ def main():
 
 
     if args_parse.request:
-        print(make_request.main(args_parse))
-
+        make_request.main(args_parse)
 
 if __name__ == '__main__':
     main()
