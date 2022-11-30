@@ -33,6 +33,7 @@ response with a status 200
 | Parameter | arg     | Description                |
 | :-------- | :------- | :------------------------- |
 | `--request` | `-r` | **Required** http method **GET** |
+| `--url` | `-u` | **Required** Direction from request or path |
 
 #### Options
 
