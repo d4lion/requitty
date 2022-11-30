@@ -1,5 +1,5 @@
 from src.args import request, url, save 
-from src.cli.commands.request_commands import get_request
+from src.cli.commands.request_commands import get_command
 
 import argparse
 
@@ -24,7 +24,7 @@ def main():
     args_parse = parser.parse_args()
 
     if args_parse.request:
-        get_request.main(args_parse)
+        get_command.main(args_parse)
 
 if __name__ == '__main__':
     main()
