@@ -1,11 +1,12 @@
 from src.args import request, url, save 
+from src.cli import asciiart
 from src.cli.commands.request_commands import get_command
 
 import argparse
 
 
 def main():
-    parser = argparse.ArgumentParser(prog='requitty')
+    parser = argparse.ArgumentParser(prog="")
 
 
     ###############################################
@@ -14,7 +15,7 @@ def main():
 
     parser.add_argument(request['shortCommand'], metavar=request['longCommand'], help=request['help'], dest="request", type=str)
 
-    parser.add_argument(url['shortCommand'], metavar=url['longCommand'], help=url['help'], type=str, dest="url")
+    parser.add_argument(url['shortCommand'], metavar=url['longCommand'], help=url['help'], type=str, dest="url", default="https://rickandmortyapi.com/api")
     
 
     parser.add_argument("-v", help="Make a verbose script", type=bool, default=False, metavar="--verbose", dest="verbose")
@@ -27,4 +28,5 @@ def main():
         get_command.main(args_parse)
 
 if __name__ == '__main__':
+    print('\n' + asciiart.assci_logo)
     main()

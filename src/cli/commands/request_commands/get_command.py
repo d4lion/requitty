@@ -1,7 +1,9 @@
 from tqdm import tqdm
-from colorama import Fore
-import requests
-import time
+from colorama import Fore, init
+import json, requests, time, os
+
+
+init(autoreset=True)
 
 
 def main(params):
@@ -24,6 +26,11 @@ def main(params):
                 if params.verbose:  # If verbose is true in params print the response
                     print(response_decoded)
                 print(Fore.GREEN + f'\n Succes and exit with {response.status_code} \n')
+
+                if params.save:
+                    print(os.getcwd())
+                    
+
 
 
 
