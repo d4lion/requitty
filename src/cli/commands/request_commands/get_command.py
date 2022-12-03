@@ -7,6 +7,11 @@ init(autoreset=True)
 
 
 def main(params):
+ 
+    def save(response_name):
+        with open(f"data/{response_name}.json", "w") as file:
+            json.dump(response_decoded, file)
+
     if 'GET' in params.request:
         try:
             response = requests.get(params.url)
@@ -20,16 +25,32 @@ def main(params):
 
                 pbar = tqdm(response_decoded)
                 for i in pbar:
-                    time.sleep(0.1)
+                    time.sleep(0.01)
                     pbar.set_description(f'Loading data: {i}')
 
                 if params.verbose:  # If verbose is true in params print the response
                     print(response_decoded)
                 print(Fore.GREEN + f'\n Succes and exit with {response.status_code} \n')
 
-                if params.save:
-                    print(os.getcwd())
-                    
+
+                ###############################################
+                #######          SAVE DATA            #########
+                ###############################################
+
+                """
+                It is looking for, saves the response provided by the GET method, a new file is created and if there is one with the same name, it asks again how the file will be named
+                """
+
+                if params.save: 
+                    response_name = input("Response file exists input name file: ")
+                    if not os.path.exists(os.getcwd() + '/data'): 
+                        os.mkdir(os.getcwd() + '/data')
+
+                    #Save the response and prove if the name already exists
+                    if os.path.exists(os.getcwd() + f'/data/{response_name}.json'):
+                        while os.path.exists(os.getcwd() + f'/data/{response_name}.json'):
+                            response_name = input("Response file exists input name file: ")
+                        save(response_name)
 
 
 
