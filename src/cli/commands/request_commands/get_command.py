@@ -6,11 +6,17 @@ import json, requests, time, os
 init(autoreset=True)
 
 
-def main(params):
+def main(params) -> None:
  
-    def save(response_name):
-        with open(f"data/{response_name}.json", "w") as file:
-            json.dump(response_decoded, file)
+    def save(response_name) -> None:
+        try:
+            with open(f"data/{response_name}.json", "w") as file:
+                json.dump(response_decoded, file)
+                file.close()
+            print(Fore.GREEN +f"\n Data saved successfully")
+        except:
+            print(Fore.GREEN + f"Error was ocurred when try to create the file {response_name}")
+            return
 
     if 'GET' in params.request:
         try:
@@ -42,15 +48,16 @@ def main(params):
                 """
 
                 if params.save: 
-                    response_name = input("Response file exists input name file: ")
                     if not os.path.exists(os.getcwd() + '/data'): 
                         os.mkdir(os.getcwd() + '/data')
 
+                    response_name = input("\n Response file exists input name file: ")
+
                     #Save the response and prove if the name already exists
-                    if os.path.exists(os.getcwd() + f'/data/{response_name}.json'):
-                        while os.path.exists(os.getcwd() + f'/data/{response_name}.json'):
-                            response_name = input("Response file exists input name file: ")
-                        save(response_name)
+
+                    while os.path.exists(os.getcwd() + f'/data/{response_name}.json'):
+                        response_name = input("Response file exists input name file: ")
+                    save(response_name)
 
 
 
