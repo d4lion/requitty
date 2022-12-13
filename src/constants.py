@@ -15,3 +15,15 @@ save = {
     "longCommand": "--save",
     "help": "Save the response of the url"
 }
+
+sort = {
+    "shortCommand": "-o",
+    "longCommand": "--order",
+    "help": "sort files in a directory by their extension"
+}
+
+
+extension = {
+    "text" : ["txt", "docx", "doc", "pdf", "pptx"],
+    "video": ["mp4", "mov", "avi", "movx"]
+}
