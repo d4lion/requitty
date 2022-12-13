@@ -1,6 +1,9 @@
+import os
 from tqdm import tqdm
 from colorama import Fore, init
-import json, requests, time, os
+from time import sleep
+from json import dump
+from requests import get
 
 
 init(autoreset=True)
@@ -11,7 +14,7 @@ def main(params) -> None:
     def save(response_name) -> None:
         try:
             with open(f"data/{response_name}.json", "w") as file:
-                json.dump(response_decoded, file)
+                dump(response_decoded, file)
                 file.close()
             print(Fore.GREEN +f"\n Data saved successfully")
         except:
@@ -20,7 +23,7 @@ def main(params) -> None:
 
     if 'GET' in params.request:
         try:
-            response = requests.get(params.url)
+            response = get(params.url)
             response_decoded = response.json()
 
             ###############################################
@@ -31,7 +34,7 @@ def main(params) -> None:
 
                 pbar = tqdm(response_decoded)
                 for i in pbar:
-                    time.sleep(0.01)
+                    sleep(0.01)
                     pbar.set_description(f'Loading data: {i}')
 
                 if params.verbose:  # If verbose is true in params print the response
@@ -51,12 +54,12 @@ def main(params) -> None:
                     if not os.path.exists(os.getcwd() + '/data'): 
                         os.mkdir(os.getcwd() + '/data')
 
-                    response_name = input("\n Response file exists input name file: ")
+                    response_name = input("\n input a name file: ")
 
                     #Save the response and prove if the name already exists
 
                     while os.path.exists(os.getcwd() + f'/data/{response_name}.json'):
-                        response_name = input("Response file exists input name file: ")
+                        response_name = input(" Response file exists input name file: ")
                     save(response_name)
 
 
@@ -71,7 +74,7 @@ def main(params) -> None:
                     Fore.YELLOW + f'\n Not found exit with {response.status_code} \n response: {response_decoded} \n ')
                 return response.status_code
         except:
-            print(Fore.RED + "\n Error was ocurred, check the url \n ")
+            print(Fore.RED + "\n Forced close \n ")
             return
 
 
