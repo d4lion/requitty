@@ -1,6 +1,8 @@
-from src.args import request, url, save 
+from src.constants import request, url, save, sort
 from src.cli import asciiart
 from src.cli.commands.request_commands import get_command
+from src.cli.commands.system import organizer
+from os import getcwd as cwd
 
 import argparse
 
@@ -22,10 +24,29 @@ def main():
 
     parser.add_argument(save['shortCommand'], metavar=save['longCommand'], help=save['help'], type=bool, default=False, dest='save')
 
+
+    ###############################################
+    ####          REQUEST SYSTEM             ######
+    ###############################################
+
+    parser.add_argument(sort['shortCommand'], help=sort['help'], metavar=sort['longCommand'], type=str, dest='order')
+
+
+
+
+
+
+
     args_parse = parser.parse_args()
 
+
     if args_parse.request:
+
         get_command.main(args_parse)
+
+    if args_parse.order:
+        organizer.main(args_parse)
+
 
 if __name__ == '__main__':
     print('\n' + asciiart.assci_logo)
