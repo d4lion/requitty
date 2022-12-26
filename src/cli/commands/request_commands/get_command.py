@@ -5,41 +5,47 @@ from time import sleep
 from json import dump
 from requests import get
 
-
+# Inicializamos la librería colorama para poder utilizar colores en la consola
 init(autoreset=True)
 
-
 def main(params) -> None:
- 
+    # Definimos una función interna llamada save que se encargará de guardar la respuesta en un archivo
     def save(response_name) -> None:
+        # Intentamos abrir un archivo para escribir en él la respuesta
         try:
             with open(f"data/{response_name}.json", "w") as file:
+                # Utilizamos la función dump de json para escribir la respuesta en formato JSON en el archivo
                 dump(response_decoded, file)
                 file.close()
+            # Si todo ha ido bien, mostramos un mensaje de éxito
             print(Fore.GREEN +f"\n Data saved successfully")
         except:
+            # Si ocurre algún error al crear o escribir en el archivo, mostramos un mensaje de error
             print(Fore.GREEN + f"Error was ocurred when try to create the file {response_name}")
             return
 
+    # Si se ha indicado en los parámetros que se debe realizar una petición GET
     if 'GET' in params.request:
+        # Intentamos realizar la petición
         try:
             response = get(params.url)
+            # Decodificamos la respuesta en formato JSON
             response_decoded = response.json()
 
-            ###############################################
-            #######          ALL IS OK            #########
-            ###############################################
-
+            # Si la petición ha tenido éxito (es decir, si el código de estado de la respuesta es 2xx)
             if response.status_code >= 200 and response.status_code < 299:
-
+                # Utilizamos la librería tqdm para mostrar una barra de progreso mientras se cargan los datos
                 pbar = tqdm(response_decoded)
                 for i in pbar:
                     sleep(0.01)
                     pbar.set_description(f'Loading data: {i}')
 
-                if params.verbose:  # If verbose is true in params print the response
+                # Si se ha indicado en los parámetros que se deben mostrar más detalles (parámetro verbose), mostramos la respuesta completa
+                if params.verbose:  
                     print(response_decoded)
+                # Mostramos un mensaje de éxito y el código de estado de la respuesta
                 print(Fore.GREEN + f'\n Succes and exit with {response.status_code} \n')
+
 
 
                 ###############################################
